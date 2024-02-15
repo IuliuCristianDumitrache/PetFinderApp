@@ -6,18 +6,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.dumitrachecristian.petapp.R
 import com.dumitrachecristian.petapp.navigation.Screen
 import com.dumitrachecristian.petapp.ui.components.AnimalItem
 import com.dumitrachecristian.petapp.ui.components.ErrorItem
@@ -49,6 +49,7 @@ fun MainScreen(
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
+            val placeholder = painterResource(id = R.drawable.petplaceholder)
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(6.dp),
@@ -61,6 +62,7 @@ fun MainScreen(
                         AnimalItem(
                             modifier = modifier,
                             animalResult = it,
+                            placeholder = placeholder,
                             onFavoriteClick = {},
                             onClick = {
                                 val baseRoute = Screen.PetDetailScreen.route
