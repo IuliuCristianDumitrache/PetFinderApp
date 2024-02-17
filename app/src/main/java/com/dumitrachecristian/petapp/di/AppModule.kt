@@ -9,6 +9,7 @@ import androidx.security.crypto.MasterKeys
 import com.dumitrachecristian.petapp.data.AppDatabase
 import com.dumitrachecristian.petapp.data.PetEntityDao
 import com.dumitrachecristian.petapp.data.SessionManager
+import com.dumitrachecristian.petapp.data.TokenManager
 import com.dumitrachecristian.petapp.network.ApiService
 import com.dumitrachecristian.petapp.network.ApiServiceProvider
 import dagger.Module
@@ -23,8 +24,12 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun provideApiService(): ApiService {
-        return ApiServiceProvider.getClient()
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return getSharedPreferences(context)
+    }
+    @Provides
+    fun provideApiService(tokenManager: TokenManager): ApiService {
+        return ApiServiceProvider.getClient(tokenManager)
     }
 
     @Provides
@@ -65,7 +70,7 @@ object AppModule {
         return SessionManager(provideSharedPreferences(context))
     }
 
-    private fun provideSharedPreferences(context: Context): SharedPreferences {
+    private fun getSharedPreferences(context: Context): SharedPreferences {
         return EncryptedSharedPreferences.create(
             "AppPreferences",
             MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
