@@ -16,3 +16,13 @@ val LightGray = Color(0xFF57575D)
 val DarkGray = Color(0xFF3C3C41)
 
 val BlackTransparent = Color(0x77000000)
+
+val Blue = Color(0xFF8ccce2)
+val Brown = Color(0xFFcaa86b)
+val Green = Color(0xFF9bcc71)
+val Putty = Color(0xFFe6d891)
+
+val BlueTransparent = Color(0xAA8ccce2)
+val BrownTransparent = Color(0xAAcaa86b)
+val GreenTransparent = Color(0xAA9bcc71)
+val PuttyTransparent = Color(0xAAe6d891)

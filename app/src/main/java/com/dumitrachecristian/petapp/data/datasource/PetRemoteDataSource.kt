@@ -1,34 +1,36 @@
 package com.dumitrachecristian.petapp.data.datasource
 
-import com.dumitrachecristian.petapp.BuildConfig
-import com.dumitrachecristian.petapp.data.SessionManager
-import com.dumitrachecristian.petapp.model.AccessTokenResponse
 import com.dumitrachecristian.petapp.model.Animal
 import com.dumitrachecristian.petapp.model.PetModelResponse
+import com.dumitrachecristian.petapp.model.SelectedFilter
+import com.dumitrachecristian.petapp.model.TypeResponse
 import com.dumitrachecristian.petapp.network.ApiService
 import com.dumitrachecristian.petapp.network.Result
+import com.dumitrachecristian.petapp.ui.mainscreen.Filter
 import javax.inject.Inject
 
 class PetRemoteDataSource @Inject constructor(
     private val apiService: ApiService,
-    val sessionManager: SessionManager
 ): BaseRemoteDataSource {
 
-    suspend fun requestToken(): Result<AccessTokenResponse> {
+    suspend fun getPets(page: Int, limit: Int, filter: SelectedFilter): Result<PetModelResponse> {
         return safeApiResult {
-            apiService.requestToken("client_credentials", BuildConfig.PET_API_KEY, BuildConfig.PET_API_SECRET)
-        }
-    }
-
-    suspend fun getPets(token: String, page: Int, limit: Int): Result<PetModelResponse> {
-        return safeApiResult {
-            apiService.getPets(token, page, limit)
+            apiService.getPets(
+                page,
+                limit,
+                type = if (filter.animalType != Filter.ALL) filter.animalType else null,
+                gender = if (filter.gender != Filter.ALL) filter.gender else null
+            )
         }
     }
 
     suspend fun getPetDetails(): Result<Animal> {
         return safeApiResult {
-            apiService.getPetDetails("", "")
+            apiService.getPetDetails( "")
         }
+    }
+
+    suspend fun getFilters(): Result<TypeResponse> {
+        return safeApiResult { apiService.getFilters() }
     }
 }

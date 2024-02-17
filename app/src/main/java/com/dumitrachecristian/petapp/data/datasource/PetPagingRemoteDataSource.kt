@@ -2,15 +2,15 @@ package com.dumitrachecristian.petapp.data.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.dumitrachecristian.petapp.data.SessionManager
 import com.dumitrachecristian.petapp.model.AnimalDto
-import com.dumitrachecristian.petapp.repository.PetRepository
+import com.dumitrachecristian.petapp.model.SelectedFilter
 import com.dumitrachecristian.petapp.network.Result
+import com.dumitrachecristian.petapp.repository.PetRepository
 
 
 class PetPagingRemoteDataSource(
     private val repository: PetRepository,
-    private val sessionManager: SessionManager
+    private val filter: SelectedFilter
 ): PagingSource<Int, AnimalDto>() {
     override fun getRefreshKey(state: PagingState<Int, AnimalDto>): Int? {
         return state.anchorPosition?.let { position ->
@@ -23,8 +23,9 @@ class PetPagingRemoteDataSource(
         return try {
             val page = params.key ?: 1
             val result = repository.getPets(
-                "Bearer ${sessionManager.getToken()}", page = page,
-                limit = 10
+                page = page,
+                limit = params.loadSize,
+                filter
             )
             when (result) {
                 is Result.Success -> {

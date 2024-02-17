@@ -4,9 +4,9 @@ import androidx.paging.PagingSource
 import com.dumitrachecristian.petapp.data.PetEntity
 import com.dumitrachecristian.petapp.data.datasource.PetLocalDataSource
 import com.dumitrachecristian.petapp.data.datasource.PetRemoteDataSource
-import com.dumitrachecristian.petapp.model.AccessTokenResponse
-import com.dumitrachecristian.petapp.model.Animal
 import com.dumitrachecristian.petapp.model.PetModelResponse
+import com.dumitrachecristian.petapp.model.SelectedFilter
+import com.dumitrachecristian.petapp.model.TypeResponse
 import com.dumitrachecristian.petapp.network.Result
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,11 +16,12 @@ class PetRepository @Inject constructor(
     private val petRemoteDataSource: PetRemoteDataSource
 ) {
 
-    suspend fun requestToken(): Result<AccessTokenResponse> {
-        return petRemoteDataSource.requestToken()
+    suspend fun getPets(page: Int, limit: Int, filter: SelectedFilter): Result<PetModelResponse> {
+        return petRemoteDataSource.getPets(page, limit, filter)
     }
-    suspend fun getPets(token: String, page: Int, limit: Int): Result<PetModelResponse> {
-        return petRemoteDataSource.getPets(token, page, limit)
+
+    suspend fun getFilters(): Result<TypeResponse> {
+        return petRemoteDataSource.getFilters()
     }
 
     suspend fun insertAnimal(petEntity: PetEntity) {

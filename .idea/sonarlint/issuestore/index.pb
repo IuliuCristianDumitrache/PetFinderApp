@@ -1,20 +1,14 @@
 
-}
-Mapp/src/main/java/com/dumitrachecristian/petapp/network/ApiServiceProvider.kt,a/9/a93b8c3edbacc0478bb871feeca9c53b6067943b
 t
 Dapp/src/main/java/com/dumitrachecristian/petapp/navigation/Screen.kt,d/3/d39194c1cd349985e767dc16f895dbb3cdd17161
 o
 ?app/src/main/java/com/dumitrachecristian/petapp/model/Colors.kt,3/7/374d49cceb1c814dbde657ff9f874ca0f18b8243
-p
-@app/src/main/java/com/dumitrachecristian/petapp/model/Address.kt,2/a/2a7ac8ec3732d523b809df2e7723abc1ce4b4e09
 n
 >app/src/main/java/com/dumitrachecristian/petapp/model/Video.kt,d/9/d95adea3dd1f294d638ad8acb7b4fb13998e20cc
 m
 =app/src/main/java/com/dumitrachecristian/petapp/model/Href.kt,c/d/cd0f28ae384cf474e080cf375bfda01ec9ce85da
 n
 >app/src/main/java/com/dumitrachecristian/petapp/model/Links.kt,1/e/1e1b5a521743667d48a97e3379bd178ef1014af5
-p
-@app/src/main/java/com/dumitrachecristian/petapp/model/Contact.kt,6/1/61e018b194e4e487ecb3eeab381f590f84ce20f5
 v
 Fapp/src/main/java/com/dumitrachecristian/petapp/data/DataBaseHelper.kt,d/d/dd6ebe487cc91c01d524983a35c9a04fbe7e0c29
 i

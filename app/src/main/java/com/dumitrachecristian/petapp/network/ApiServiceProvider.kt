@@ -1,43 +1,31 @@
 package com.dumitrachecristian.petapp.network
 
-
-import okhttp3.Interceptor
+import com.dumitrachecristian.petapp.data.TokenManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-
 object ApiServiceProvider {
 
     private const val BASE_URL = "https://api.petfinder.com/v2/"
 
-    fun getClient(): ApiService {
+    fun getClient(tokenManager: TokenManager): ApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(getOkHttpClient())
+            .client(getOkHttpClient(tokenManager))
             .build()
             .create(ApiService::class.java)
     }
 
-    private fun getOkHttpClient(): OkHttpClient {
+    private fun getOkHttpClient(tokenManager: TokenManager): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val basicInterceptor = Interceptor { chain ->
-            val original = chain.request()
-
-
-            val newRequest = original
-                .newBuilder()
-                .build()
-            chain.proceed(newRequest)
-        }
-
         return OkHttpClient.Builder()
-            .addInterceptor(basicInterceptor)
+            .addInterceptor(AuthorizationInterceptor(tokenManager))
+            .authenticator(RefreshTokenAuthenticator(tokenManager))
             .addInterceptor(loggingInterceptor)
             .build()
     }
