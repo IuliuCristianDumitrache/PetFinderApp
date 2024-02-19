@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import androidx.paging.compose.collectAsLazyPagingItems
+import com.dumitrachecristian.petapp.ui.favoritescreen.FavoriteScreen
 import com.dumitrachecristian.petapp.ui.mainscreen.MainScreen
 import com.dumitrachecristian.petapp.ui.mainscreen.MainViewModel
 import com.dumitrachecristian.petapp.ui.petdetailsscreen.PetDetailsScreen
@@ -26,6 +26,10 @@ fun NavGraphBuilder.mainNavGraph(
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id") ?: ""
             PetDetailsScreen(navController = navController, viewModel = viewModel, id = id)
+        }
+
+        composable(route = Screen.FavoriteScreen.route) {
+            FavoriteScreen(navController = navController, viewModel = viewModel)
         }
     }
 }

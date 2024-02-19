@@ -15,8 +15,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
@@ -58,8 +63,20 @@ fun PetDetailsScreen(viewModel: MainViewModel, navController: NavHostController,
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.verticalScroll(scrollState)) {
+        IconButton(
+            modifier = Modifier
+                .padding(top = 20.dp, start = 10.dp),
+            onClick = {
+                navController.popBackStack()
+            }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                contentDescription = stringResource(R.string.back),
+                tint = Color.Black
+            )
+        }
         animalDto?.let { animal ->
-            val placeholder = painterResource(id = R.drawable.petplaceholder)
+            val placeholder = painterResource(id = R.drawable.dogplaceholder)
             AnimalItemImage(animal, placeholder)
 
             Column(modifier = Modifier.padding(8.dp)) {
@@ -74,29 +91,35 @@ fun PetDetailsScreen(viewModel: MainViewModel, navController: NavHostController,
                 Section(containerColor = Putty, title = animal.type, description = animal.breeds.primary)
 
                 Row {
-                    Section(modifier = Modifier.weight(0.33f), containerColor = Blue, title = "Age", description = animal.age)
-                    Section(modifier = Modifier.weight(0.33f), containerColor = Brown, title = "Gender", description = animal.gender)
-                    Section(modifier = Modifier.weight(0.33f), containerColor = Green, title = "Size", description = animal.size)
+                    Section(modifier = Modifier.weight(0.33f), containerColor = Blue, title = stringResource(
+                        R.string.age
+                    ), description = animal.age)
+                    Section(modifier = Modifier.weight(0.33f), containerColor = Brown, title = stringResource(
+                        R.string.gender
+                    ), description = animal.gender)
+                    Section(modifier = Modifier.weight(0.33f), containerColor = Green, title = stringResource(
+                        R.string.size
+                    ), description = animal.size)
                 }
                 Section(title = "", description = animal.description)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Contact",
+                    text = stringResource(R.string.contact),
                     style = MaterialTheme.typography.headlineSmall,
                 )
-                animal.contact.address?.address1?.let { address ->
+                animal.contact?.address?.address1?.let { address ->
                     ClickableLink(address) {
                         context.openGoogleMaps(address)
                     }
                 }
-                animal.contact.email?.let { email ->
+                animal.contact?.email?.let { email ->
                     ClickableLink(email) {
                         context.openEmail(email)
                     }
                 }
-                animal.contact.phone?.let { phone ->
+                animal.contact?.phone?.let { phone ->
                     ClickableLink(phone) {
                         context.openPhone(phone)
                     }
@@ -161,7 +184,10 @@ fun Tags(tags: List<String>?) {
                     modifier = Modifier
                         .background(
                             color = listOf(
-                                BlueTransparent, BrownTransparent, PuttyTransparent, GreenTransparent
+                                BlueTransparent,
+                                BrownTransparent,
+                                PuttyTransparent,
+                                GreenTransparent
                             ).random(),
                             shape = RoundedCornerShape(4.dp)
                         )

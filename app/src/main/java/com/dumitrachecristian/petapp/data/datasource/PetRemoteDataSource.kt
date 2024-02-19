@@ -1,6 +1,5 @@
 package com.dumitrachecristian.petapp.data.datasource
 
-import com.dumitrachecristian.petapp.model.Animal
 import com.dumitrachecristian.petapp.model.PetModelResponse
 import com.dumitrachecristian.petapp.model.SelectedFilter
 import com.dumitrachecristian.petapp.model.TypeResponse
@@ -19,14 +18,10 @@ class PetRemoteDataSource @Inject constructor(
                 page,
                 limit,
                 type = if (filter.animalType != Filter.ALL) filter.animalType else null,
-                gender = if (filter.gender != Filter.ALL) filter.gender else null
+                gender = if (filter.gender != Filter.ALL) filter.gender else null,
+                location = if (filter.currentLocationLabel != Filter.EVERYWHERE) filter.currentLocationValue else null,
+                distance = if (filter.currentLocationLabel != Filter.EVERYWHERE) 500 else null
             )
-        }
-    }
-
-    suspend fun getPetDetails(): Result<Animal> {
-        return safeApiResult {
-            apiService.getPetDetails( "")
         }
     }
 

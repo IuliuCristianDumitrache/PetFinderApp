@@ -6,11 +6,13 @@ import com.dumitrachecristian.petapp.model.AnimalDto
 import com.dumitrachecristian.petapp.model.SelectedFilter
 import com.dumitrachecristian.petapp.network.Result
 import com.dumitrachecristian.petapp.repository.PetRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class PetPagingRemoteDataSource(
     private val repository: PetRepository,
-    private val filter: SelectedFilter
+    private val filter: SelectedFilter,
 ): PagingSource<Int, AnimalDto>() {
     override fun getRefreshKey(state: PagingState<Int, AnimalDto>): Int? {
         return state.anchorPosition?.let { position ->
@@ -30,8 +32,18 @@ class PetPagingRemoteDataSource(
             when (result) {
                 is Result.Success -> {
                     result.data?.let { response ->
+                        val list = response.pets
+
+                        val listFavorite = withContext(Dispatchers.IO) {
+                            repository.getFavoritesIds()
+                        }
+                        list.map {
+                            it.isFavorite = listFavorite.contains(it.id)
+                            return@map it
+                        }
+
                         return LoadResult.Page(
-                            data = response.pets,
+                            data = list,
                             prevKey = null,
                             nextKey = if (response.pets.isNotEmpty()) response.pagination.currentPage + 1 else null
                         )
