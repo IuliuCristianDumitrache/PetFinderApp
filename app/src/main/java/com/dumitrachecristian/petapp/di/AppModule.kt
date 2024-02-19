@@ -8,10 +8,11 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.dumitrachecristian.petapp.data.AppDatabase
 import com.dumitrachecristian.petapp.data.PetEntityDao
-import com.dumitrachecristian.petapp.data.SessionManager
 import com.dumitrachecristian.petapp.data.TokenManager
 import com.dumitrachecristian.petapp.network.ApiService
 import com.dumitrachecristian.petapp.network.ApiServiceProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,34 +41,15 @@ object AppModule {
         .fallbackToDestructiveMigration()
         .build()
 
-
-//    @OptIn(ExperimentalPagingApi::class)
-//    @Provides
-//    @Singleton
-//    fun providePetsPager(appDatabase: AppDatabase, sessionManager: SessionManager,
-//                         repository: PetRepository): Pager<Int, PetEntity> {
-//        return Pager (
-//            config = PagingConfig(pageSize = 10),
-//            remoteMediator = PetRemoteMediator(
-//                appDatabase,
-//                sessionManager,
-//                repository
-//            ),
-//            pagingSourceFactory = {
-//                appDatabase.petEntityDao().pagingSource()
-//            }
-//        )
-//    }
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(application: Application): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(application)
+    }
 
     @Provides
     fun provideModelDao(appDatabase: AppDatabase): PetEntityDao {
         return appDatabase.petEntityDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
-        return SessionManager(provideSharedPreferences(context))
     }
 
     private fun getSharedPreferences(context: Context): SharedPreferences {

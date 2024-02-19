@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.dumitrachecristian.petapp.model.Animal
 import com.dumitrachecristian.petapp.model.AnimalDto
 import com.dumitrachecristian.petapp.model.Breeds
+import com.dumitrachecristian.petapp.model.Photo
 
 @Entity(
     tableName = "PET_ENTITY",
@@ -19,6 +19,12 @@ data class PetEntity(
 
     @ColumnInfo(name = "TYPE")
     val type: String,
+
+    @ColumnInfo(name = "URL")
+    val url: String,
+
+    @ColumnInfo(name = "PHOTO_URL")
+    val photoUrl: String,
 
     @ColumnInfo(name = "SPECIES")
     val species: String,
@@ -49,6 +55,9 @@ data class PetEntity(
 
     @ColumnInfo(name = "STATUS")
     val status: String,
+
+    @ColumnInfo(name = "FAVORITE")
+    val isFavorite: Boolean
 )
 
 fun AnimalDto.toPetEntity(): PetEntity {
@@ -64,12 +73,19 @@ fun AnimalDto.toPetEntity(): PetEntity {
         gender = gender ?: "",
         name = name ?: "",
         description = description ?: "",
-        status = status ?: ""
+        status = status ?: "",
+        isFavorite = isFavorite,
+        photoUrl = if (photos.isNullOrEmpty()) {
+            ""
+        } else {
+            photos[0].medium
+        },
+        url = url,
     )
 }
 
-fun PetEntity.toPet(): Animal {
-    return Animal(
+fun PetEntity.toPet(): AnimalDto {
+    return AnimalDto(
         id = id,
         type = type,
         species = species,
@@ -79,7 +95,12 @@ fun PetEntity.toPet(): Animal {
             mixed = mixed,
             unknown = unknownBreed
         ), age = age, gender = gender, name = name,
-        description = description, status = status
-
+        description = description, status = status,
+        contact = null,
+        links = null,
+        photos = listOf(Photo(medium = photoUrl, small = "", large = "", full = "")),
+        size = null,
+        isFavorite = isFavorite,
+        url = url,
     )
 }

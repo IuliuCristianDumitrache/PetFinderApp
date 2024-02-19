@@ -130,6 +130,10 @@ dependencies {
     implementation ("androidx.paging:paging-compose:3.2.1")
     implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
 
+    // Accompanist
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+
+
 
     testImplementation("io.mockk:mockk:1.13.9")
 }

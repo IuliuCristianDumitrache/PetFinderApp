@@ -1,6 +1,5 @@
 package com.dumitrachecristian.petapp.repository
 
-import androidx.paging.PagingSource
 import com.dumitrachecristian.petapp.data.PetEntity
 import com.dumitrachecristian.petapp.data.datasource.PetLocalDataSource
 import com.dumitrachecristian.petapp.data.datasource.PetRemoteDataSource
@@ -28,22 +27,15 @@ class PetRepository @Inject constructor(
         petLocalDataSource.insert(petEntity)
     }
 
-    suspend fun getPetsFromDb(): Flow<List<PetEntity>> {
+    fun getPetsFromDb(): Flow<List<PetEntity>> {
         return petLocalDataSource.getFavoritePets()
     }
 
-    suspend fun removePet(id: String) {
+    suspend fun removePet(id: Int) {
         petLocalDataSource.remove(id)
     }
 
-    suspend fun paging(): PagingSource<Int, PetEntity> {
-        return petLocalDataSource.pagingSource()
-    }
-
-    suspend fun upsertAll(pets: List<PetEntity>) {
-        return petLocalDataSource.upsertAll(pets)
-    }
-    fun clearAll() {
-        return petLocalDataSource.clearAll()
+    suspend fun getFavoritesIds(): List<Int> {
+        return petLocalDataSource.getFavoritesIds()
     }
 }

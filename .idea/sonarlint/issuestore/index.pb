@@ -1,6 +1,4 @@
 
-t
-Dapp/src/main/java/com/dumitrachecristian/petapp/navigation/Screen.kt,d/3/d39194c1cd349985e767dc16f895dbb3cdd17161
 o
 ?app/src/main/java/com/dumitrachecristian/petapp/model/Colors.kt,3/7/374d49cceb1c814dbde657ff9f874ca0f18b8243
 n
@@ -33,3 +31,21 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+r
+Bapp/src/main/java/com/dumitrachecristian/petapp/model/AnimalDto.kt,a/a/aa9c59aebeae0d702ea854faa0faf6de7f3a5d64
+†
+Vapp/src/main/java/com/dumitrachecristian/petapp/data/datasource/PetRemoteDataSource.kt,1/8/186f1609742104bcb10856d5507b49967aca04f4
+t
+Dapp/src/main/java/com/dumitrachecristian/petapp/data/PetEntityDao.kt,6/3/6330f2754a722dbdfc44c3c287a4dc27eb16c4a9
+q
+Aapp/src/main/java/com/dumitrachecristian/petapp/data/PetEntity.kt,3/6/36268d7794bdfa7b0cf09ef84e1d024d78893f37
+‡
+Wapp/src/main/java/com/dumitrachecristian/petapp/ui/petdetailsscreen/PetDetailsScreen.kt,7/2/72717c1d018591b03597679061ba167cf894f121
+ƒ
+Sapp/src/main/java/com/dumitrachecristian/petapp/ui/favoritescreen/FavoriteScreen.kt,3/f/3f5ab3580a8c765ad3b12a42a33c572725ceee93
+w
+Gapp/src/main/java/com/dumitrachecristian/petapp/model/SelectedFilter.kt,d/c/dc5c40e4f41380a7e5c8f07d13b6de5618951b4c
+~
+Napp/src/main/java/com/dumitrachecristian/petapp/ui/mainscreen/MainViewModel.kt,5/f/5f8138a8ad0a3e8b0e27b78af05a191082f4e56b
+{
+Kapp/src/main/java/com/dumitrachecristian/petapp/ui/mainscreen/MainScreen.kt,0/8/0882711c8404329c3a5bb5f088b0ddd43369b5a8
